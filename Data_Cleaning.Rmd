@@ -1,0 +1,53 @@
+---
+title: "CapStone Data Cleaning"
+author: "Green Team, Rafael"
+date: "June 15, 2016"
+output: html_document
+---
+
+##Overview
+This a R Script that will Clean and Perform Exploritory Analysis on the Data.
+This is the first stage of our Reporting Analysis for Kroger where we use Data Science tools
+to get the data ready for visulization tools to showcase Supply Chain / Marketing Insigts for decesion making from users. 
+
+## Data Loading 
+```{r}
+library(caret)
+library(ggplot2)
+library(randomForest)
+library(rattle)
+set.seed(12345)
+
+training <- read.csv("test.csv", na.strings=c("NA","#DIV/0!",""))
+testing <- read.csv("pml-testing.csv", na.strings=c("NA","#DIV/0!",""))
+
+#Need cross validation to test if the datasets will be good for prediciton 
+# Partion the training set into two. 40% Training and 60% Testing
+inTrain  <- createDataPartition(y = training$classe, p=0.4,list=FALSE)
+mytrain <- training[inTrain ,]
+mytest <- training[-inTrain, ]
+
+
+```
+
+##Data Cleaning + Train/Test Datasets 
+```
+NAs <- apply(training, 2, function(x) { sum(is.na(x)) })
+NAs2 <- apply(testing, 2, function(x) { sum(is.na(x)) })
+
+training <- training[, which(NAs == 0)]
+testing <- testing[, which(NAs == 0)]
+
+training <- training[, 7:160]
+testing  <- testing[, 7:160]
+```
+##Cross Validation  
+.For cross validation we are spliting up the samples with the class variable. We are going to split the dataset 0.5 into a training and testing dataset. This leaves room for enough training data without the data getting too large for an expensive Random Forest model. We use .40 for training set in light of time. 
+```
+
+```
+
+##Create Views for Tableau - at least 3-5 for solution
+Create several sample datasets 
+```
+```
